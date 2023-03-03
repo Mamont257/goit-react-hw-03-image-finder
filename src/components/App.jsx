@@ -1,5 +1,8 @@
 import React, {Component} from "react";
 import { Searchbar } from "./Searchbar/Searchbar";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ImageGallery } from "./ImageGallery/ImageGallery";
 
 
 
@@ -12,7 +15,7 @@ export class App extends Component {
     isLoading: false,
     error: null,
 
-    image: "",
+    imageName: "",
   }
 
 
@@ -30,15 +33,13 @@ export class App extends Component {
   //   }
   // }
 
-  handleSubmit = (e) => {
-    // e.preventDefault();
-
+  handleSubmit = (imageName) => {
     // this.setState({isLoading: true})
-    console.log(e);
+    // console.log(imageName);
+
+    this.setState({imageName})
 
   }
-
-
 
 
   render() {
@@ -47,6 +48,8 @@ export class App extends Component {
     return (
       <div>
         <Searchbar search={this.handleSubmit} />
+        <ToastContainer autoClose={2000} />
+        <ImageGallery imageName={this.state.imageName} />
 
 
         {/* {error && <p>Whoops, something went wrong: {error.message}</p>} */}
