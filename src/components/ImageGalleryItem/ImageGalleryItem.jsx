@@ -48,7 +48,7 @@ export class ImageGalleryItem extends Component {
         // console.log(this.state);
         return (
             <div>
-            {this.props.images.hits.map(({ id, webformatURL, tags }) => (
+            {this.props.image.map(({ id, webformatURL, tags }) => (
                 <li key={id}>
                     <img src={webformatURL} alt={tags} />
                 </li>

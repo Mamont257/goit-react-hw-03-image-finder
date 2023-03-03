@@ -28,7 +28,7 @@ export class ImageGallery extends Component {
             return resp.json();
         }).then(images => {
             console.log(images);
-            this.setState({images})
+            this.setState({ images: images.hits})
         })
 }
 
