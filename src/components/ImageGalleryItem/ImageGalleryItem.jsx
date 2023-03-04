@@ -1,59 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
+import { ImageGalItem, ImageGalItemImage } from "./ImageGalleryItem.styled";
 
 
-export class ImageGalleryItem extends Component {
-    // state = {
-    //     image: null,
-    // }
+export const ImageGalleryItem = ({image}) => {
 
-    // componentDidUpdate(prevProps, prevState) {
-
-    //     if (prevProps.image !== this.props.image) {
-    //         console.log("erbsrhnsr");
-
-    //         let imagesArr = this.props.image.hits;
-
-    //         this.setState({image: imagesArr})
-    //     }
-    // }
-
-
-//     async fetchImages(page = 1) {
-//     const BASE_URL = 'https://pixabay.com/api/';
-//     const KEY = '32844399-402b025363825ff7850242d10';
-
-
-//         return fetch(`${BASE_URL}?key=${KEY}&q=${this.state.images}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`).then(resp => {
-//         if (!resp.ok) {
-//             throw new Error(resp.status);
-//         }
-//         return resp.json();
-//     }).then(data => {
-//         if (!data.total) {
-//             throw new Error(data.total);
-//         }
-//         console.log(data);
-//         return data;
-//     })
-// }
-
-
-
-
-
-
-
-
-    render() {
-        // console.log(this.state);
         return (
             <div>
-            {this.props.image.map(({ id, webformatURL, tags }) => (
-                <li key={id}>
-                    <img src={webformatURL} alt={tags} />
-                </li>
+                {image.map(({ id, webformatURL, tags }) => (
+                <ImageGalItem key={id}>
+                    <ImageGalItemImage src={webformatURL} alt={tags} width='400px' />
+                </ImageGalItem>
             ))}
             </div>
             )
-    }
 }

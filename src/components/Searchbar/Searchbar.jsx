@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { toast } from 'react-toastify';
+import { SearchBar, SearchForm, SearchFormButton, SearchFormButtonLabel, SearchFormInput } from "./Searchbar.styled";
 
 
 export class Searchbar extends Component {
@@ -15,7 +16,7 @@ export class Searchbar extends Component {
         e.preventDefault();
 
         if (this.state.imageName.trim() !== '') {
-            toast('🦄 Wow greats!');
+            // toast('🦄 Wow greats!');
             this.props.search(this.state.imageName)
         }
 
@@ -26,21 +27,21 @@ export class Searchbar extends Component {
 
     render() {
         return (
-            <header>
-                <form onSubmit={this.handleSubmit}>
-                    <button type="submit">
-                        <span>Search</span>
-                    </button>
+            <SearchBar>
+                <SearchForm onSubmit={this.handleSubmit}>
+                    <SearchFormButton type="submit">
+                        <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+                    </SearchFormButton>
 
-                    <input
+                    <SearchFormInput
                         type="text"
                         name="imageName"
                         value={this.state.imageName}
-                        // placeholder="Search images and photos"
+                        placeholder="Search images and photos"
                         onChange={this.handleSearchImg}
                     />
-                </form>
-            </header>
+                </SearchForm>
+            </SearchBar>
         )
     }
 }
