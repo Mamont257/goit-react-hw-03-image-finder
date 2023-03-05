@@ -1,71 +1,71 @@
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { ImageGal } from "./ImageGallery.styled";
-import { Dna } from  'react-loader-spinner'
-
+import { Loader } from "components/Loader/Loader";
+import { Button } from "components/Button/Button";
 
 
 export class ImageGallery extends Component {
     state = {
-        images: null,
-
+        images: [],
         isLoading: false,
+        isButton: false,
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        
-        if (prevProps.imageName !== this.props.imageName) {
-            this.setState({ isLoading: true });
+    async componentDidUpdate(prevProps, prevState) {     
+        const { imageName, page } = this.props;
+
+        if (prevProps.imageName !== imageName || prevProps.page !== page) {
+            await this.setState({ isLoading: true});
             // setTimeout(() => {
-                this.fetchImages();
+                this.fetchImages(imageName, page, prevState);
             // }, 2000);
             
         }
     }
 
-
-    async fetchImages(page = 1) {
+    async fetchImages(imageName, page, prevState) {
         const BASE_URL = 'https://pixabay.com/api/';
         const KEY = '32844399-402b025363825ff7850242d10';
 
-
-        fetch(`${BASE_URL}?key=${KEY}&q=${this.props.imageName}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`).then(resp => {
+        await fetch(`${BASE_URL}?key=${KEY}&q=${imageName}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=12`).then(resp => {
             if (!resp.ok) {
                 throw new Error(resp.status);
             }
             return resp.json();
         }).then(images => {
             if (!images.total) {
-                toast.error('Bad recwest')
+                this.setState({ images: [], isButton: false})
+                return toast.error('Bad recvest')
             }
-            // console.log(images);
-            this.setState({ images: images.hits })
+            this.setState({ images: [...prevState.images, ...images.hits], isButton: true })
         }).finally(
             this.setState({isLoading: false})
         )
     }
-    
 
     render() {
-        const { images, isLoading } = this.state;
+        const { images, isLoading, isButton } = this.state;
+        const { handleClick } = this.props;
         return (
         <div>
-            {isLoading && <Dna
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="dna-loading"
-                    wrapperStyle={{
-                        marginLeft: "auto",
-                        marginRight: "auto"
-                    }}
-                wrapperClass="dna-wrapper"
-            />}
+            {isLoading && <Loader/>}
             <ImageGal>
-                {images && <ImageGalleryItem image={images} />}
+                {images.map(image => {
+              return <ImageGalleryItem key={image.id} image={image} />;
+            })}
             </ImageGal>
+            {isButton && <Button nextPage={handleClick} />}
         </div>
         )
     }
 }
+
+
+ImageGallery.propTypes = {
+  imageName: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  handleClick: PropTypes.func.isRequired,
+};

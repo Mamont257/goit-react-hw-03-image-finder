@@ -6,9 +6,6 @@ import { ImageGallery } from "./ImageGallery/ImageGallery";
 
 
 
-
-
-
 export class App extends Component {
   state = {
     articles: [],
@@ -16,56 +13,32 @@ export class App extends Component {
     error: null,
 
     imageName: "",
+    page: 1,
   }
-
-
-
-  // async componentDidMount() {
-  //   this.setState({ isLoading: true });
-
-  //   try {
-  //     const response = await axios.get("/search?query=react");
-  //     this.setState({ articles: response.data.hits });
-  //   } catch (error) {
-  //     this.setState({ error });
-  //   } finally {
-  //     this.setState({ isLoading: false });
-  //   }
-  // }
 
   handleSubmit = (imageName) => {
-    // this.setState({isLoading: true})
-    // console.log(imageName);
-
     this.setState({imageName})
-
   }
 
+  handleClick = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+  };
 
   render() {
-    const { articles, isLoading, error } = this.state;
+    const { imageName, page } = this.state;
 
     return (
       <div>
-        <Searchbar search={this.handleSubmit} />
+        <Searchbar onSearch={this.handleSubmit} />
         <ToastContainer autoClose={2000} />
-        <ImageGallery imageName={this.state.imageName} />
-
-
-        {/* {error && <p>Whoops, something went wrong: {error.message}</p>} */}
-        {/* {isLoading && <p>Loading...</p>} */}
-        {/* {articles.length > 0 && <ArticleList articles={articles} />} */}
+        <ImageGallery
+          imageName={imageName}
+          page={page}
+          handleClick={this.handleClick}
+        />
       </div>
     )
   }
 }
-
-
-
-// export const App = () => {
-//   return (
-//     <div>
-//       React homework template
-//     </div>
-//   );
-// };

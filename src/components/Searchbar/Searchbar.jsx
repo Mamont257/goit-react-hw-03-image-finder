@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { SearchBar, SearchForm, SearchFormButton, SearchFormButtonLabel, SearchFormInput } from "./Searchbar.styled";
 
@@ -17,13 +18,11 @@ export class Searchbar extends Component {
 
         if (this.state.imageName.trim() !== '') {
             // toast('🦄 Wow greats!');
-            this.props.search(this.state.imageName)
+            this.props.onSearch(this.state.imageName)
         }
 
         this.setState({ imageName: "" })
     }
-
-
 
     render() {
         return (
@@ -45,3 +44,7 @@ export class Searchbar extends Component {
         )
     }
 }
+
+Searchbar.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+};
