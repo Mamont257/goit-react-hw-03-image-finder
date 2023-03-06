@@ -8,10 +8,6 @@ import { ImageGallery } from "./ImageGallery/ImageGallery";
 
 export class App extends Component {
   state = {
-    articles: [],
-    isLoading: false,
-    error: null,
-
     imageName: "",
     page: 1,
   }
