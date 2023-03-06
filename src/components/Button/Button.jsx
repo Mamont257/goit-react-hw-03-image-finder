@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { ButtonMore } from "./Button.styled";
+import { ButtonMore, Container } from "./Button.styled";
 
 export const Button = ({nextPage}) => {
-    return (
-            <ButtonMore type="button" onClick={() => nextPage()}>Load more</ButtonMore>
+  return (
+      <Container>
+      <ButtonMore type="button" onClick={() => nextPage()}>Load more</ButtonMore>
+      </Container>
     )  
 }
 

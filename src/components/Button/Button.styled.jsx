@@ -25,3 +25,10 @@ export const ButtonMore = styled.button`
             background-color: #303f9f;
         }
 `
+
+export const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+`

@@ -12,6 +12,7 @@ export class ImageGallery extends Component {
         images: [],
         isLoading: false,
         isButton: false,
+        isNew: false,
     }
 
     async componentDidUpdate(prevProps, prevState) {     
@@ -19,11 +20,11 @@ export class ImageGallery extends Component {
 
         if (prevProps.imageName !== imageName || prevProps.page !== page) {
             await this.setState({ isLoading: true, images: [] });
-            // prevState.images = [];
-            // setTimeout(() => {
                 this.fetchImages(imageName, page, prevState);
-            // }, 2000);
-            
+        }
+
+        if (prevProps.imageName !== imageName) {
+            this.setState({ isNew: true})
         }
     }
 
@@ -39,9 +40,13 @@ export class ImageGallery extends Component {
         }).then(images => {
             if (!images.total) {
                 this.setState({ images: [], isButton: false})
-                return toast.error('Bad recvest')
+                return toast.error('Bad request')
             }
-            this.setState({ images: [...prevState.images, ...images.hits], isButton: true })
+            if (this.state.isNew) {
+                this.setState({ images: images.hits, isButton: true, isNew: false })
+            } else {
+                this.setState({ images: [...prevState.images, ...images.hits], isButton: true })
+            }
         }).finally(
             this.setState({isLoading: false})
         )
