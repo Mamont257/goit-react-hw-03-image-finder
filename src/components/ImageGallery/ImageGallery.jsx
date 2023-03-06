@@ -18,7 +18,8 @@ export class ImageGallery extends Component {
         const { imageName, page } = this.props;
 
         if (prevProps.imageName !== imageName || prevProps.page !== page) {
-            await this.setState({ isLoading: true});
+            await this.setState({ isLoading: true, images: [] });
+            // prevState.images = [];
             // setTimeout(() => {
                 this.fetchImages(imageName, page, prevState);
             // }, 2000);
