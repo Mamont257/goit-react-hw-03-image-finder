@@ -13,7 +13,7 @@ export class App extends Component {
   }
 
   handleSubmit = (imageName) => {
-    this.setState({imageName})
+    this.setState({imageName, page: 1})
   }
 
   handleClick = () => {

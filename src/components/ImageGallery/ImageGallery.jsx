@@ -47,6 +47,11 @@ export class ImageGallery extends Component {
             } else {
                 this.setState({ images: [...prevState.images, ...images.hits], isButton: true })
             }
+
+            this.setState({
+                isButton: images.hits.length === 12,
+            });
+
         }).finally(
             this.setState({isLoading: false})
         )
